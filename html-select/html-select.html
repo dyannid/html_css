@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <select name="Test-Mode" id="Test-Mode">
+        <option value="dust">Dust</option>
+        <option value="water" selected>Water</option>
+        <option value="beer">Beer</option>
+        <option value="wine red white">Wine-Red-White</option>
+    </select>
+    <script>
+        document.addEventListener('DOMContentLoader', ()=> {
+            document 
+                .getElementById('Test-Mode')
+                .addEventListener('input', handleSelect);
+        })
+    </script>
+</body>
+</html>

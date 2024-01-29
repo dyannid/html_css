@@ -1,0 +1,26 @@
+https://www.w3schools.com/tags/tag_input.asp
+
+What is HTML
+HyperText Markup Language)
+Tool use to create website
+
+HTML = given instruction to computer
+
+<button>Hello</button>
+
+<button> --> this is a tag. We are telling the comuter what we want to create. button is  tad name
+
+there is a opening and closing tag.
+
+<p>  --> paragraphe tag. 
+
+<a> --> an anchor element. Basically a link to another website.
+
+href="https://www.youtube.com/"  --> this an HTML Attribute = it modifies how an element behaves
+
+target=""  --> as second attribut of <a>, it tells where we want to open our webpage. With value target="_blank", it will open in a new tab. 
+
+
+
+
+
