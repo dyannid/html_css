@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <div id="searchpanel_loading" class="row dataTables_wrapper dt-bootstrap4" style="padding-bottom: 5px !important">
+      <div class="col-sm-6 col-md-4">
+        <div class="dataTables_length">
+          <label>Show
+            <select name="qa_test_results_length" class="custom-select custom-select-sm form-control form-control-sm" disabled>
+              <option value="100">100</option>
+              <option value="-1">All</option>
+            </select> entries
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="dataTables_testmode_filter">
+          <label>
+              <input id="testmode_filter" type="search" class="testmode_filter" placeholder="... loading please wait!" disabled>
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="dataTables">
+          <label>
+              <input type="search" class="form-control form-control-sm form-form-control-sm">
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="dataTables_filter">
+          <label>Search:
+              <input type="search" class="form-control form-control-sm" placeholder="... loading please wait!" disabled>
+          </label>
+        </div>
+      </div>
+    </div>
+</head>
+<body>
+    <script>
+          var testMode = ["", "nightly", "regression", "weekly", "integration", "build-test-mr", "production"];
+          var $label = ('<label> Quick Filter </label>');
+          var $div_format = ('<div class="col-sm-6 col-md-4"> </div>');
+          var $div_element= ('<div class="quick_filter"> </div>');
+          var $selection = ('<select name="test-mode" class="select-test-mode"></select>');
+          var columnOfTestMode = 2;
+
+          
+          var textToSearch = "moi";
+          textToSearch == "moi" ? console.log(textToSearch): console.log("none");
+
+
+    </script>
+</body>
+</html>

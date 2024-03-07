@@ -1,0 +1,518 @@
+<table id="qa_test_results" class="table table-sm table-striped table-hover" style="width:100%">
+    <div id="searchpanel_loading" class="row dataTables_wrapper dt-bootstrap4" style="padding-bottom: 5px !important">
+      <div class="col-sm-6 col-md-4">
+        <div class="dataTables_length">
+          <label>Show
+            <select name="qa_test_results_length" class="custom-select custom-select-sm form-control form-control-sm" disabled>
+              <option value="100">100</option>
+              <option value="-1">All</option>
+            </select> entries
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="dataTables_testmode_filter">
+          <label>
+              <input type="search" class="form-control form-control-sm form-form-control-sm" placeholder="... loading please wait!" disabled>
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="dataTables_filter">
+          <label>Search:
+              <input type="search" class="form-control form-control-sm" placeholder="... loading please wait!" disabled>
+          </label>
+        </div>
+      </div>
+    </div>
+      <thead class="thead-dark">
+          <tr>
+              <th style="width: 3%"></th>
+              <th style="width: 3%"></th>
+              <th style="width: 76%">Filename</th>
+              <th style="width: 15%">Date Modified</th>
+              <th style="width: 3%"></th>
+          </tr>
+      </thead>
+      <tbody>
+          {{#each entries}}
+              {{setVariable "file_name" file}}
+              {{setVariable "video" "false"}}
+              {{setVariable "image" "false"}}
+              {{setVariable "link" "false"}}
+              {{setVariable "linkBroken" "false"}}
+              {{#if extension}}
+                  {{setVariable "path" href}}
+                  {{#ifCond extension ".webm"}}
+                      {{setVariable "video" "true"}}
+                      <tr>
+                  {{else}}
+                      {{#ifCond extension ".mp4"}}
+                         {{setVariable "video" "true"}}
+                         <tr>
+                      {{else}}
+                          {{#ifCond extension ".png"}}
+                              {{setVariable "image" "true"}}
+                              <tr>
+                          {{else}}
+                              {{#ifCond extension ".link"}}
+                                   {{setVariable "path_name" linkPath}}
+                                   {{setVariable "path" href}}
+                                   {{setVariable "link" "true"}}
+                                   <tr>
+                              {{else}}
+                                  {{#ifCond extension ".linkBroken"}}
+                                       {{setVariable "path_name" linkPath}}
+                                       {{setVariable "path" href}}
+                                       {{setVariable "linkBroken" "true"}}
+                                       <tr>
+                                  {{else}}
+                                      {{#ifCond extension ".folder"}}
+                                           {{setVariable "path" href}}
+                                           <tr>
+                                      {{else}}
+                                          {{setVariable "path" href}}
+                                          <tr>
+                                      {{/ifCond}}
+                                  {{/ifCond}}
+                              {{/ifCond}}
+                          {{/ifCond}}
+                      {{/ifCond}}
+                  {{/ifCond}}
+              {{else}}
+                  {{setVariable "path" href}}
+                  <tr>
+              {{/if}}
+              <div class="col">
+                  {{#ifCond extension ".folder"}}
+                      {{#ifCond exit_code ""}}
+                          <td class="align-middle"; style="text-align:center; vertical-align:middle">
+                      {{else}}
+                      {{#compare exit_code "==" 0}}
+                          <td class="align-middle Jenkins" style="border: 3px solid green" data-toggle="tooltip" data-placement="top" data-title="Jenkins exit code: 0">
+                      {{else}}
+                      {{#compare exit_code "==" 1}}
+                          <td class="align-middle Jenkins" style="border: 3px solid black" data-toggle="tooltip" data-placement="top" data-title="Jenkins exit code: 1">
+                      {{else}}
+                      {{#compare exit_code "==" 2}}
+                          <td class="align-middle Jenkins" style="border: 3px solid orange" data-toggle="tooltip" data-placement="top" data-title="Jenkins exit code: 2">
+                      {{else}}
+                      {{#compare exit_code "==" 3}}
+                          <td class="align-middle Jenkins" style="border: 3px solid purple" data-toggle="tooltip" data-placement="top" data-title="Jenkins exit code: 3">
+                      {{else}}
+                      {{#compare exit_code "==" 4}}
+                          <td class="align-middle Jenkins" style="border: 3px solid red" data-toggle="tooltip" data-placement="top" data-title="Jenkins exit code: 4">
+                      {{else}}
+                      {{#compare exit_code "==" 5}}
+                          <td class="align-middle Jenkins" style="border: 3px solid gray" data-toggle="tooltip" data-placement="top" data-title="Jenkins exit code: 5">
+                      {{else}}
+                      {{#compare exit_code "==" 6}}
+                          <td class="align-middle Jenkins" style="border: 3px solid red" data-toggle="tooltip" data-placement="top" data-title="Jenkins exit code: 6">
+                      {{else}}
+                      {{#compare exit_code "==" 7}}
+                          <td class="align-middle Jenkins" style="border: 3px solid black" data-toggle="tooltip" data-placement="top" data-title="Jenkins exit code: 7">
+                      {{else}}
+                      {{#ifCond exit_code "running"}}
+                          <td class="align-middle Blink Jenkins" style="border: 3px solid green" data-toggle="tooltip" data-placement="top" data-title="Test not finshed.">
+                      {{else}}
+                      {{#ifCond exit_code "fatal"}}
+                          <td class="align-middle Jenkins" style="border: 3px solid magenta" data-toggle="tooltip" data-placement="top" data-title="No Jenkins exit code found.">
+                      {{else}}
+                          <td class="align-middle Jenkins" style="border: 3px solid magenta" data-toggle="tooltip" data-placement="top" data-title="Unknown Jenkins exit code.">
+                      {{/ifCond}}
+                      {{/ifCond}}
+                      {{/compare}}
+                      {{/compare}}
+                      {{/compare}}
+                      {{/compare}}
+                      {{/compare}}
+                      {{/compare}}
+                      {{/compare}}
+                      {{/compare}}
+                      {{/ifCond}}
+                  {{else}}
+                      <td class="align-middle"; style="text-align:center; vertical-align:middle">
+                  {{/ifCond}}
+  
+                      {{#ifCond extension ".folder"}}
+                          {{#ifCond result ""}}
+                          {{else}}
+                              {{#ifCond result "running"}}
+                                  <!--i class="far fa-circle Blink" data-toggle="tooltip" data-placement="left" data-title="Test result: Running"></i-->
+                              {{/ifCond}}
+                              {{#ifCond result "pass"}}
+                                  <i class="fas fa-circle" style="color:green" data-toggle="tooltip" data-placement="left" data-title="Test result: Pass"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "disabled"}}
+                                  <i class="fas fa-circle" style="color:green" data-toggle="tooltip" data-placement="left" data-title="Test result: Disabled Test Existing"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "expected_fail"}}
+                                  <i class="fas fa-circle" style="color:green" data-toggle="tooltip" data-placement="left" data-title="Test result: Expected Fail"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "ignored_warning"}}
+                                  <i class="fas fa-circle" style="color:green" data-toggle="tooltip" data-placement="left" data-title="Test result: Ignored Warning"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "ignored_fail"}}
+                                  <i class="far fa-circle" style="color:green" data-toggle="tooltip" data-placement="left" data-title="Test result: Ignored Fail"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "ignored_unknown"}}
+                                  <i class="fas fa-circle" style="color:green" data-toggle="tooltip" data-placement="left" data-title="Test result: Ignored Unknown"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "warning"}}
+                                  <i class="fas fa-circle" style="color:orange" data-toggle="tooltip" data-placement="left" data-title="Test result: Warning"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "unstable"}}
+                                  <i class="far fa-circle" style="color:orange" data-toggle="tooltip" data-placement="left" data-title="Test result: Unstable Test Failed"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "ignored_try_warning"}}
+                                  <i class="far fa-circle" style="color:orange" data-toggle="tooltip" data-placement="left" data-title="Test result: Ignored Try Warning"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "ignored_try_fail"}}
+                                  <i class="far fa-circle" style="color:red" data-toggle="tooltip" data-placement="left" data-title="Test result: Ignored Try Fail"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "ignored_try_unknown"}}
+                                  <i class="far fa-circle" style="color:red" data-toggle="tooltip" data-placement="left" data-title="Test result: Ignored Try Unknown"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "fatal"}}
+                                  <i class="fas fa-circle" style="color:darkviolet" data-toggle="tooltip" data-placement="left" data-title="Test result: Fatal"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "fail"}}
+                                  <i class="fas fa-circle" style="color:red" data-toggle="tooltip" data-placement="left" data-title="Test result: Fail"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "interrupted"}}
+                                  <i class="fas fa-star" style="color:black" data-toggle="tooltip" data-placement="left" data-title="Test result: Interrupted"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "ignored_interrupted"}}
+                                  <i class="far fa-star" style="color:black" data-toggle="tooltip" data-placement="left" data-title="Test result: Ignored Interrupted"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "ignored_disabled"}}
+                                  <i class="fas fa-circle" style="color:green" data-toggle="tooltip" data-placement="left" data-title="Test result: Pass"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "unknown"}}
+                                  <i class="fas fa-circle" style="color:red" data-toggle="tooltip" data-placement="left" data-title="Test result: Unknown"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "execution_problems"}}
+                                  <i class="fas fa-circle" style="color:black" data-toggle="tooltip" data-placement="left" data-title="Test result: Execution Problems"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "ignored_try_execution_problems"}}
+                                  <i class="far fa-circle" style="color:black" data-toggle="tooltip" data-placement="left" data-title="Test result: Ignored Try Execution Problems"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "timeout"}}
+                                  <i class="fas fa-circle" style="color:red" data-toggle="tooltip" data-placement="left" data-title="Test result: Timeout"></i>
+                              {{/ifCond}}
+                              {{#ifCond result "setup_problems"}}
+                                  <i class="fas fa-circle" style="color:red" data-toggle="tooltip" data-placement="left" data-title="Test result: Setup Problems"></i>
+                              {{/ifCond}}
+                          {{/ifCond}}
+                      {{/ifCond}}
+                  </td>
+              </div>
+              {{#each this}}
+                  {{#ifCond @key "extension"}}
+                      {{#switch this}}
+                         <td class="align-middle">
+                         {{#case ".html"}}
+                           <span class="far fa-file-code" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".txt"}}
+                           <span class="far fa-file-alt" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".conf"}}
+                           <span class="far fa-file-alt" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".yml"}}
+                           <span class="far fa-file-alt" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".yaml"}}
+                           <span class="far fa-file-alt" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".manifest"}}
+                           <span class="far fa-file-alt" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".bin"}}
+                           <span class="far fa-file" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".dtb"}}
+                           <span class="fas fa-database" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".imx"}}
+                           <span class="far fa-file" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".odt"}}
+                           <span class="far fa-file-word" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".sh"}}
+                           <span class="far fa-file-code" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".robot"}}
+                           <span class="far fa-file-code" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".xml"}}
+                           <span class="far fa-file-code" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".short-precise"}}
+                           <span class="far fa-file-code" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".png"}}
+                           <span class="far fa-file-image" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".jpg"}}
+                           <span class="far fa-file-image" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".jpeg"}}
+                           <span class="far fa-file-image" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".bz2"}}
+                           <span class="far fa-file-archive" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".gz"}}
+                           <span class="far fa-file-archive" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".xz"}}
+                           <span class="far fa-file-archive" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".md"}}
+                           <span class="far fa-file-archive" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".md5"}}
+                           <span class="far fa-file-archive" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".log"}}
+                           <span class="far fa-file-alt" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".pem"}}
+                           <span class="far fa-file" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".json"}}
+                           <span class="far fa-file-code" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".js"}}
+                           <span class="far fa-file-code" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".webm"}}
+                           <span class="far fa-file-video" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".mp4"}}
+                           <span class="far fa-file-video" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".link"}}
+                           <span class="fas fa-link" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".linkBroken"}}
+                           <span class="fas fa-unlink" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#case ".folder"}}
+                           <span class="fas fa-folder" aria-hidden="true"></span>
+                         {{/case}}
+                         {{#default_td }}
+                         {{/default_td }}
+                         </td>
+                      {{/switch}}
+                  {{else}}
+                      {{#ifCond @key "file"}}
+                          {{#ifCond @root.video "true"}}
+                              <td class="align-middle"><a class="venobox_custom" data-gall="videos2" data-title="{{ this }}" data-vbtype="iframe" href="{{ @root.path }}">{{ this }}</a></td>
+                          {{else}}
+                              {{#ifCond @root.image "true"}}
+                                  <td class="align-middle"><a class="venobox_custom" data-gall="images2" data-title="{{ this }}" href="{{ @root.path }}">{{ this }}</a></td>
+                              {{else}}
+                                  {{#ifCond @root.link "true"}}
+                                      <td class="align-middle" href="{{ @root.path }}"><a href="{{ @root.path }}" >{{ this }} <i class="fas fa-arrow-right"></i> {{ @root.path_name }}</a></td>
+                                   {{else}}
+                                       {{#ifCond @root.linkBroken "true"}}
+                                          <td class="align-middle">{{ this }} <i class="fas fa-arrow-right"></i><font color="#800"> This link does not work anymore! </font></td>
+                                       {{else}}
+                                          <td class="align-middle" href="{{ @root.path }}"><a href="{{ @root.path }}" >{{ this }}</a></td>
+                                       {{/ifCond}}
+                                   {{/ifCond}}
+                               {{/ifCond}}
+                          {{/ifCond}}
+                      {{else}}
+                          {{#ifCond @key "linkPath"}}
+                          {{else}}
+                              {{#ifCond @key "result"}}
+                              {{else}}
+                                  {{#ifCond @key "exit_code"}}
+                                  {{else}}
+                                      {{#ifCond @key "href"}}
+                                      {{else}}
+                                          <td class="align-middle" href="{{ @root.path }}">{{ this }}</td>
+                                      {{/ifCond}}
+                                  {{/ifCond}}
+                              {{/ifCond}}
+                          {{/ifCond}}
+                      {{/ifCond}}
+                  {{/ifCond}}
+              {{/each}}
+              <div class="col">
+                  <td class="align-middle">
+                    {{#ifCond extension ".folder"}}
+                        <a style="text-align: left; color: white;" data-href={{ @root.file_name }} href="./" class="button btn btn-secondary btn-ms compress btn-download" data-toggle="tooltip" data-placement="right" data-title="Download tar.gz file">
+                           <i class="fas fa-download"></i>
+                        </a>
+                    {{else}}{{#ifCond extension ".flv"}}
+                        <a style="text-align: left;color: white;padding-left: 15px;padding-right: 15px;" data-href={{ @root.file_name }} href="./" class="button btn btn-info btn-ms prio" data-toggle="tooltip" data-placement="right" data-title="Prioritise video conversion">
+                            <i class="fas fa-angle-double-up"></i>
+                        </a>
+                    {{else}}
+                        <a style="text-align: left; color: white;" href={{ @root.path }} class="button btn btn-secondary btn-ms btn-download" download data-toggle="tooltip" data-placement="right" data-title="Download tar.gz file">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    {{/ifCond}}
+                    {{/ifCond}}
+                  </td>
+              </div>
+          {{/each}}
+      </tbody>
+      <tfoot>
+          <tr>
+            <th></th>
+            <th></th>
+            <th>Filename</th>
+            <th>Date Modified</th>
+            <th></th>
+          </tr>
+      </tfoot>
+      <div class="alert alert-primary alert-dismissible fade show myAlert-bottom" id="compress" role="alert" style="display:none;">
+          <span><center><strong>Download will be prepared!</strong> This could need some time, because all
+                files will be compressed to a tar.gz archive. This message will be closed, after this
+                process is finished. The download will start automatically.</center>
+          </span>
+          <button type="button" class="close" onclick="hide_alert(0, 'compress');" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="alert alert-primary alert-dismissible fade show myAlert-bottom" id="prio" role="alert" style="display:none;">
+          <span><center><strong>Video was prioritized!</strong> Please wait, for finishing the video conversion.</center>
+          </span>
+          <button type="button" class="close" onclick="hide_alert(0, 'prio');" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="alert alert-danger alert-dismissible fade show myAlert-bottom" id="prioFailed" role="alert" style="display:none;">
+          <span><center><strong>Video prioritization failed!</strong> Please contact the koala team.</center>
+          </span>
+          <button type="button" class="close" onclick="hide_alert(0, 'prioFailed');" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="alert alert-danger alert-dismissible fade show myAlert-bottom" id="compressFailed" role="alert" style="display:none;">
+          <span><center><strong>Folder compression failed!</strong> Please contact the koala team.</center>
+          </span>
+          <button type="button" class="close" onclick="hide_alert(0, 'compressFailed');" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+  </table>
+  {{#section 'compress_folder'}}
+      <script>
+      $(document).ready(function(){
+        $('.compress').click(function () {
+          var href = $(this).data('href');
+          var url = window.location.href + 'compress?href=' + escape(href);
+          var regex = /.*tar.gz/
+  
+          $('#compress').show();
+  
+          $.get(url, function (data) {
+              console.log('client data:', data);
+              if ( data == "Error"){
+                  hide_alert(5000, 'compress');
+                  $('#compressFailed').show();
+              } else {
+                hide_alert(5000, 'compress');
+                downloadURI('/qa_test_results/.comp/' + data, href + '.tar.gz');
+              }
+          });
+          return false;
+        });
+  
+        $('.prio').click(function () {
+          var href = $(this).data('href');
+          var url = window.location.href + 'prio?href=' + escape(href);
+          $('#prio').show();
+          $.get(url, function (data) {
+              console.log('client data:', data);
+              if ( data == "Error"){
+                  hide_alert(0, 'prio');
+                  $('#prioFailed').show();
+              } else {
+                  hide_alert(5000, 'prio');
+              }
+          });
+          return false; // don't navigate to href="#"
+        });
+  
+        $('[data-toggle="tooltip"]').tooltip();
+      });
+  
+      function downloadURI(uri, name)
+      {
+          var a = document.createElement('a');
+          a.setAttribute('href', uri);
+          a.setAttribute('target', '_blank');
+          a.setAttribute('download', name);
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+      }
+  
+      function hide_alert(timeout, id) {
+          setTimeout(function(){
+              $('#' + id).hide();
+          },timeout);
+      }
+      </script>
+  {{/section}}
+  
+  {{#section 'java_script'}}
+      <script>
+         $(document).ready(function() {
+           var searchpanel_loading = document.getElementById('searchpanel_loading');
+           searchpanel_loading.style.display = 'none';
+  
+           $('#qa_test_results').DataTable({
+              searchPanes: {
+                  columns: [3],
+              },
+              order: [],
+              columnDefs: [
+                 { "orderable": false, "targets": 0 },
+                 { "orderable": false, "targets": 1 },
+                 { "orderable": true, "targets": 2 },
+                 { "orderable": true, "targets": 3 },
+                 { "orderable": false, "targets": 4 }
+               ],
+              lengthMenu: [[100, -1], [100, "All"]],
+              pageLength: 100,
+              language: {
+                          searchPlaceholder: "Search by the following columns as a criteria"
+                      }
+           });
+         });
+      </script>
+  {{/section}}
+  
+  {{#section 'modal_video_viewer'}}
+      <script>
+      $(document).ready(function(){
+        $('.venobox_custom').venobox({
+        border: '10px',
+        titleattr: 'data-title',
+        spinner: 'three-bounce',
+        numeratio: true,
+        infinigall: true
+      });
+      });
+  
+      </script>
+  {{/section}}
+  
+  {{#section 'footer'}}
+      <!-- Copyright -->
+      <div class="footer-copyright text-center py-3">Contact: Quality Assurance<br>
+      </div>
+      <!-- Copyright -->
+  {{/section}}
+  
